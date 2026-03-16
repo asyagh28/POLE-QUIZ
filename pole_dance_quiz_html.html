@@ -1,0 +1,203 @@
+<!DOCTYPE html>
+<html lang="it">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Pole Dance Quiz – Livello Base</title>
+<style>
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+  body { font-family: 'Segoe UI', sans-serif; background: linear-gradient(135deg, #1a0a2e 0%, #2d0060 100%); min-height: 100vh; display: flex; align-items: center; justify-content: center; padding: 20px; }
+  .container { max-width: 500px; width: 100%; }
+  h1 { color: #fff; font-size: 28px; font-weight: 800; text-align: center; margin-bottom: 6px; }
+  .subtitle { color: #e91e8c; font-weight: 700; font-size: 13px; text-align: center; letter-spacing: 2px; text-transform: uppercase; margin-bottom: 24px; }
+  .card { background: #2a1050; border-radius: 20px; padding: 24px; margin-bottom: 16px; border: 1px solid #9c27b033; }
+  .emoji-big { font-size: 64px; text-align: center; display: block; margin-bottom: 12px; }
+  .grid2 { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; margin: 16px 0; }
+  .sec-box { background: #ffffff0d; border-radius: 12px; padding: 12px 10px; border: 1px solid #9c27b044; text-align: center; }
+  .sec-box .icon { font-size: 22px; }
+  .sec-box .name { color: #ccc; font-size: 12px; margin-top: 4px; }
+  .sec-box .count { color: #e91e8c; font-size: 11px; margin-top: 2px; }
+  .btn { width: 100%; background: linear-gradient(135deg, #e91e8c, #9c27b0); color: #fff; border: none; border-radius: 50px; padding: 16px; font-size: 17px; font-weight: 800; cursor: pointer; letter-spacing: 1px; text-transform: uppercase; box-shadow: 0 4px 20px #e91e8c66; }
+  .btn:hover { opacity: 0.9; }
+  .note { color: #ffffff55; font-size: 12px; text-align: center; margin-top: 12px; }
+  /* quiz */
+  .section-label { color: #e91e8c; font-weight: 700; font-size: 13px; letter-spacing: 2px; text-transform: uppercase; text-align: center; margin-bottom: 6px; }
+  .progress-bar { background: #ffffff22; border-radius: 8px; height: 6px; overflow: hidden; margin-bottom: 4px; }
+  .progress-fill { height: 100%; background: linear-gradient(90deg, #e91e8c, #9c27b0); border-radius: 8px; transition: width 0.4s; }
+  .progress-text { color: #ffffff55; font-size: 12px; text-align: center; margin-bottom: 16px; }
+  .question-text { color: #fff; font-size: 16px; font-weight: 600; line-height: 1.5; }
+  .options { display: flex; flex-direction: column; gap: 10px; margin-bottom: 16px; }
+  .opt-btn { background: #2a1050; border: 1px solid #9c27b044; border-radius: 14px; padding: 14px 16px; color: #ddd; font-size: 14px; text-align: left; cursor: pointer; font-family: inherit; display: flex; align-items: center; gap: 10px; transition: all 0.2s; }
+  .opt-btn:disabled { cursor: default; }
+  .opt-btn.correct { background: #1a4a2a; border-color: #4caf5099; color: #a5d6a7; }
+  .opt-btn.wrong { background: #4a1a1a; border-color: #f4433699; color: #ef9a9a; }
+  .opt-letter { width: 26px; height: 26px; border-radius: 50%; border: 2px solid #9c27b088; display: flex; align-items: center; justify-content: center; font-size: 12px; font-weight: 700; color: #e91e8c; flex-shrink: 0; }
+  .tip-box { background: #1a3a4a; border: 1px solid #29b6f644; border-radius: 14px; padding: 14px 16px; margin-bottom: 16px; color: #81d4fa; font-size: 13px; line-height: 1.6; }
+  /* result */
+  .score-box { background: linear-gradient(135deg, #e91e8c, #9c27b0); border-radius: 20px; padding: 24px; text-align: center; margin-bottom: 20px; }
+  .score-pct { font-size: 60px; font-weight: 900; color: #fff; }
+  .score-sub { color: #ffffff99; font-size: 14px; }
+  .msg-box { background: #2a1050; border-radius: 16px; padding: 16px; margin-bottom: 20px; border: 1px solid #9c27b044; color: #eee; line-height: 1.6; }
+  .sec-result { background: #2a1050; border-radius: 14px; padding: 12px; border: 1px solid #9c27b033; text-align: center; }
+  .sec-result .mini-bar { background: #ffffff22; border-radius: 8px; height: 5px; overflow: hidden; margin: 6px 0 4px; }
+  .sec-result .mini-fill { height: 100%; background: linear-gradient(90deg, #e91e8c, #9c27b0); border-radius: 8px; }
+  .sec-result .sec-score { color: #e91e8c; font-size: 13px; font-weight: 700; }
+  .hidden { display: none; }
+</style>
+</head>
+<body>
+<div class="container">
+
+  <!-- INTRO -->
+  <div id="screen-intro">
+    <span class="emoji-big">🎀</span>
+    <h1>POLE DANCE GUIDE</h1>
+    <p class="subtitle">Quiz Livello Base</p>
+    <div class="card">
+      <p style="color:#ddd;line-height:1.6;margin-bottom:16px">Metti alla prova le tue conoscenze su <strong style="color:#e91e8c">riscaldamento, workout mirati, skill base e tips</strong> per diventare una pole dancer!</p>
+      <div class="grid2">
+        <div class="sec-box"><div class="icon">🔥</div><div class="name">Riscaldamento</div><div class="count">4 domande</div></div>
+        <div class="sec-box"><div class="icon">💪</div><div class="name">Workout Mirati</div><div class="count">5 domande</div></div>
+        <div class="sec-box"><div class="icon">🌀</div><div class="name">Skill Base</div><div class="count">4 domande</div></div>
+        <div class="sec-box"><div class="icon">✨</div><div class="name">Tips & Tricks</div><div class="count">4 domande</div></div>
+      </div>
+    </div>
+    <button class="btn" onclick="startQuiz()">Inizia il Quiz 💪</button>
+    <p class="note">17 domande totali</p>
+  </div>
+
+  <!-- QUIZ -->
+  <div id="screen-quiz" class="hidden">
+    <div class="section-label" id="q-section"></div>
+    <div class="progress-bar"><div class="progress-fill" id="q-progress"></div></div>
+    <div class="progress-text" id="q-counter"></div>
+    <div class="card"><p class="question-text" id="q-text"></p></div>
+    <div class="options" id="q-options"></div>
+    <div class="tip-box hidden" id="q-tip"></div>
+    <button class="btn hidden" id="btn-next" onclick="nextQuestion()">Prossima domanda →</button>
+  </div>
+
+  <!-- RESULT -->
+  <div id="screen-result" class="hidden" style="text-align:center">
+    <div style="font-size:72px;margin-bottom:8px" id="res-emoji"></div>
+    <h1 style="margin-bottom:16px">Risultati Finali</h1>
+    <div class="score-box"><div class="score-pct" id="res-pct"></div><div class="score-sub" id="res-sub"></div></div>
+    <div class="msg-box" id="res-msg"></div>
+    <div class="grid2" id="res-sections"></div>
+    <br>
+    <button class="btn" onclick="restart()">🔄 Riprova il Quiz</button>
+  </div>
+
+</div>
+
+<script>
+const questions = [
+  { section:"🔥 Riscaldamento", q:"Quanto tempo dovrebbe durare un riscaldamento prima di una sessione di pole dance?", opts:["5 minuti","10–15 minuti","30 minuti","Non serve scaldarsi"], a:1, tip:"Un riscaldamento di 10–15 minuti prepara muscoli e articolazioni, riducendo il rischio di infortuni." },
+  { section:"🔥 Riscaldamento", q:"Quale di questi è il miglior esercizio di warm-up cardio per la pole?", opts:["Stretching statico a freddo","Jumping jacks + skip sul posto","Sollevamento pesi pesanti","Corsa veloce per 1 km"], a:1, tip:"Jumping jacks e skip attivano tutto il corpo in modo dinamico, perfetto prima del pole!" },
+  { section:"🔥 Riscaldamento", q:"Lo stretching statico (tenere una posizione ferma) va fatto…", opts:["Prima dell'allenamento","Durante gli esercizi al pole","Dopo l'allenamento come cool-down","Mai nella pole dance"], a:2, tip:"Lo stretching statico a fine sessione aiuta il recupero muscolare e migliora la flessibilità nel tempo." },
+  { section:"🔥 Riscaldamento", q:"Quale area del corpo è fondamentale mobilizzare prima di fare la pole?", opts:["Solo le gambe","Solo le braccia","Spalle, polsi, anche e colonna vertebrale","Solo il collo"], a:2, tip:"La pole coinvolge tutto il corpo — spalle, polsi, anche e schiena vanno mobilizzati con cura!" },
+  { section:"💪 Workout Mirati", q:"Quale esercizio è più efficace per rafforzare il CORE per la pole dance?", opts:["Bicep curl","Hollow body hold","Squat con bilanciere","Bench press"], a:1, tip:"L'Hollow Body Hold allena il core profondo, fondamentale per le figure e le inversioni al pole." },
+  { section:"💪 Workout Mirati", q:"Per migliorare la GRIP STRENGTH, quale esercizio è più utile?", opts:["Crunch addominali","Dead hang alla sbarra","Affondi","Plank laterale"], a:1, tip:"Il Dead Hang allena la presa e rinforza polsi e avambracci — essenziale per stare al pole!" },
+  { section:"💪 Workout Mirati", q:"Quale esercizio aiuta maggiormente a rafforzare le BRACCIA per i push/pull al pole?", opts:["Corsa sul tapis roulant","Negative pull-up (discesa lenta)","Leg press","Hip thrust"], a:1, tip:"I negative pull-up costruiscono forza nei dorsali e bicipiti — perfetti per chi non riesce ancora a fare pull-up completi." },
+  { section:"💪 Workout Mirati", q:"Per rafforzare gli ABS e prepararsi alle figure statiche, quale serie è più completa?", opts:["Crunch classici x 100","Plank + leg raises + flutter kicks","Solo stretching addominale","Sit-up veloci x 50"], a:1, tip:"Plank, leg raises e flutter kicks allenano il core in modo funzionale, non solo superficiale!" },
+  { section:"💪 Workout Mirati", q:"Con quale frequenza settimanale è consigliato l'allenamento di forza per la pole (livello base)?", opts:["Ogni giorno senza riposo","2–3 volte a settimana con giorni di recupero","1 volta ogni 2 settimane","Solo durante la lezione di pole"], a:1, tip:"2–3 sessioni settimanali permettono al muscolo di crescere durante il recupero. Il riposo è parte dell'allenamento!" },
+  { section:"🌀 Skill Base", q:"Qual è la prima skill di salita che si impara solitamente nella pole dance?", opts:["Inversion","Basic climb","Ayesha","Deadlift"], a:1, tip:"Il Basic Climb è la tecnica di salita al pole più elementare — base di tutto il resto!" },
+  { section:"🌀 Skill Base", q:"Cosa si intende con 'static pole'?", opts:["Un pole che si muove durante la danza","Un pole fisso che non ruota","Un pole a pavimento","Un pole per principianti avanzati"], a:1, tip:"Lo static pole non ruota: richiede più forza muscolare rispetto allo spin pole." },
+  { section:"🌀 Skill Base", q:"Qual è una figura base fondamentale per iniziare a lavorare sulla schiena e le gambe?", opts:["Ayesha","Fireman","Superman","Iron X"], a:1, tip:"Il Fireman è una delle prime figure che si imparano: allena la coordinazione e il grip con tutto il corpo." },
+  { section:"🌀 Skill Base", q:"Cosa significa 'body wave' nella pole dance?", opts:["Un salto acrobatico","Un movimento fluido ondulatorio di tutto il corpo","Una tecnica di caduta sicura","Un tipo di spin veloce"], a:1, tip:"Il body wave è un movimento fluido dalla testa ai piedi — fondamentale per la fluidità e l'estetica della danza." },
+  { section:"✨ Tips & Tricks", q:"Qual è il miglior abbigliamento per la pole dance?", opts:["Tuta intera e calze","Pantaloncini corti e top — pelle scoperta","Leggings lunghi e felpa","Qualsiasi abbigliamento va bene"], a:1, tip:"La pelle scoperta crea attrito con il pole — è fondamentale per grip e sicurezza durante le figure!" },
+  { section:"✨ Tips & Tricks", q:"Quando è consigliato usare il grip aid (come iTac o Dry Hands)?", opts:["Solo se si è principianti","Quando le mani sudano troppo e si perde la presa","Sempre, ad ogni sessione","Mai, è pericoloso"], a:1, tip:"Il grip aid aiuta quando le mani sudano, ma va usato con moderazione per non alterare la sensibilità della presa." },
+  { section:"✨ Tips & Tricks", q:"Quanto spesso dovresti pulire il tuo pole?", opts:["Una volta al mese","Prima e dopo ogni sessione","Solo quando è visibilmente sporco","Non serve pulirlo"], a:1, tip:"Pulire il pole con alcool isopropilico prima e dopo ogni sessione garantisce grip ottimale e igiene!" },
+  { section:"✨ Tips & Tricks", q:"Cosa fare se compaiono lividi (bruises) durante l'allenamento?", opts:["Smettere definitivamente","È normale all'inizio — continuare con gradualità e curare la pelle","Aumentare subito l'intensità","Coprirli e ignorarli"], a:1, tip:"I bruises sono normalissimi per chi inizia! Con il tempo la pelle si abitua. Ghiaccio, arnica e riposo sono i tuoi migliori amici 💜" },
+];
+
+const motivational = [
+  { max:30, emoji:"🌱", msg:"Sei all'inizio del tuo viaggio nella pole! Ogni campionessa ha iniziato da zero. Studia, allenati e tornerai qui con un punteggio stellare!" },
+  { max:59, emoji:"💫", msg:"Buona base! Hai già qualche conoscenza, ma c'è ancora tanto da scoprire. Continua ad allenarti e vedrai grandi progressi!" },
+  { max:79, emoji:"🔥", msg:"Molto bene! Sei sulla strada giusta. Con dedizione e allenamento mirati diventerai una vera pole dancer!" },
+  { max:99, emoji:"🌟", msg:"Quasi perfetta! Hai una solida conoscenza delle basi. Continua così — il pole ti appartiene!" },
+  { max:100, emoji:"👑", msg:"PUNTEGGIO PERFETTO! Sei una vera pole queen! Conosci ogni segreto del pole livello base. Ora sali su quel pole e brillaaa!" },
+];
+
+let cur = 0, answers = [];
+
+function show(id) {
+  ["screen-intro","screen-quiz","screen-result"].forEach(s => document.getElementById(s).classList.add("hidden"));
+  document.getElementById(id).classList.remove("hidden");
+}
+
+function startQuiz() { cur = 0; answers = []; show("screen-quiz"); renderQ(); }
+
+function renderQ() {
+  const q = questions[cur];
+  const pct = (cur / questions.length) * 100;
+  document.getElementById("q-section").textContent = q.section;
+  document.getElementById("q-progress").style.width = pct + "%";
+  document.getElementById("q-counter").textContent = `Domanda ${cur+1} di ${questions.length}`;
+  document.getElementById("q-text").textContent = q.q;
+  document.getElementById("q-tip").classList.add("hidden");
+  document.getElementById("btn-next").classList.add("hidden");
+  const opts = document.getElementById("q-options");
+  opts.innerHTML = "";
+  q.opts.forEach((o, i) => {
+    const b = document.createElement("button");
+    b.className = "opt-btn";
+    b.innerHTML = `<span class="opt-letter">${["A","B","C","D"][i]}</span>${o}`;
+    b.onclick = () => select(i);
+    opts.appendChild(b);
+  });
+}
+
+function select(i) {
+  const q = questions[cur];
+  answers.push(i);
+  const btns = document.querySelectorAll(".opt-btn");
+  btns.forEach((b, idx) => {
+    b.disabled = true;
+    if (idx === q.a) b.classList.add("correct");
+    else if (idx === i) b.classList.add("wrong");
+  });
+  const tip = document.getElementById("q-tip");
+  tip.innerHTML = `💡 <strong>Tip:</strong> ${q.tip}`;
+  tip.classList.remove("hidden");
+  const btnNext = document.getElementById("btn-next");
+  btnNext.textContent = cur + 1 < questions.length ? "Prossima domanda →" : "Vedi i risultati 🏆";
+  btnNext.classList.remove("hidden");
+}
+
+function nextQuestion() {
+  cur++;
+  if (cur < questions.length) renderQ();
+  else showResult();
+}
+
+function showResult() {
+  const score = answers.filter((a, i) => a === questions[i].a).length;
+  const pct = Math.round((score / questions.length) * 100);
+  const res = motivational.find(r => pct <= r.max);
+  document.getElementById("res-emoji").textContent = res.emoji;
+  document.getElementById("res-pct").textContent = pct + "%";
+  document.getElementById("res-sub").textContent = `${score} / ${questions.length} risposte corrette`;
+  document.getElementById("res-msg").textContent = res.msg;
+
+  const sections = ["🔥 Riscaldamento","💪 Workout Mirati","🌀 Skill Base","✨ Tips & Tricks"];
+  const secDiv = document.getElementById("res-sections");
+  secDiv.innerHTML = "";
+  sections.forEach(s => {
+    const qs = questions.filter(q => q.section === s);
+    const correct = qs.filter((q, i) => answers[questions.indexOf(q)] === q.a).length;
+    const spct = Math.round((correct / qs.length) * 100);
+    secDiv.innerHTML += `<div class="sec-result">
+      <div style="font-size:20px">${s.split(" ")[0]}</div>
+      <div style="color:#ccc;font-size:11px;margin:4px 0">${s.replace(/^.{2} /,"")}</div>
+      <div class="mini-bar"><div class="mini-fill" style="width:${spct}%"></div></div>
+      <div class="sec-score">${correct}/${qs.length}</div>
+    </div>`;
+  });
+  show("screen-result");
+}
+
+function restart() { show("screen-intro"); }
+</script>
+</body>
+</html>
